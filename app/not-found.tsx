@@ -1,10 +1,6 @@
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function page() {
-  return (
-    <div>
-      <h1>Page Not found</h1>
-      <Link href="/">Home</Link>
-    </div>
-  );
+export default function NotFound() {
+  redirect("/");
+  return <div></div>;
 }
