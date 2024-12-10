@@ -1,3 +1,4 @@
+// import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -6,6 +7,9 @@ import { getCurrentUser } from "@/_lib/actions/user.actions";
 import { VoyagerProvider } from "./voyagerContext";
 import "react-datepicker/dist/react-datepicker.css";
 import { ColorModeProvider } from "./colorModeContext";
+// const ColorModeProvider = dynamic(() => import('./colorModeContext').then((mod) => mod.ColorModeProvider), {
+//   ssr: false // This ensures the component is not SSR'd
+// });
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

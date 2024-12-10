@@ -1,6 +1,10 @@
-import { redirect } from "next/navigation";
+import Link from "next/link";
 
-export default function NotFound() {
-  redirect("/");
-  return <div></div>;
+export default function page() {
+  return (
+    <div>
+      <h1>Page Not found</h1>
+      <Link href="/">Home</Link>
+    </div>
+  );
 }

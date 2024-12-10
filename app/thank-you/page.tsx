@@ -6,7 +6,7 @@ import { useVoyager } from "../voyagerContext";
 import { useRouter } from "next/navigation";
 import CarInfo from "@/_components/CarInfo";
 
-export default function Thank_you() {
+export default function Page() {
   const router = useRouter();
   const { pickUp, pickUpDate, dropOff, dropOffDate, car } = useVoyager();
   const orderIsEmpty = pickUp === "";

@@ -1,7 +1,11 @@
 "use client";
 
-import { useLocalStorage } from "@/_lib/hooks/useLocalStorage";
+import  useLocalStorage  from "@/_lib/hooks/useLocalStorage";
+// import dynamic from "next/dynamic";
 import { createContext, ReactNode, useContext, useEffect } from "react";
+// const useLocalStorage = dynamic(()=>import("@/_lib/hooks/useLocalStorage").then((mod) => mod.useLocalStorage), {
+//     ssr: false // This ensures the component is not SSR'd
+//   })
 
 type ColorModeContext = {
   toggleColorMode: () => void;
@@ -10,10 +14,11 @@ type ColorModeContext = {
 const ColorModeContext = createContext({} as ColorModeContext);
 
 export function ColorModeProvider({ children }: { children: ReactNode }) {
-  const [isDarkMode, setIsDarkMode] = useLocalStorage(
-    window.matchMedia("(prefers-color-scheme: dark)").matches,
-    "theme"
-  );
+  let preferedTheme = false;
+  if (typeof window !== "undefined") {
+    preferedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  const [isDarkMode, setIsDarkMode] = useLocalStorage(preferedTheme, "theme");
 
   useEffect(() => {
     if (isDarkMode) {

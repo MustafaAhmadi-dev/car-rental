@@ -6,7 +6,7 @@ import Testimonials from "@/_components/Testimonials";
 import Container from "@/_components/ui/Container";
 import RevealOnScroll from "@/_components/ui/RevealOnScroll";
 
-function About() {
+export default function page() {
   return (
     <>
       <HeroPage sectionName="About" />
@@ -30,5 +30,3 @@ function About() {
     </>
   );
 }
-
-export default About;
