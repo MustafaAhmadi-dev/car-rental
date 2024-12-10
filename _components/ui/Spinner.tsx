@@ -1,7 +1,7 @@
 import "./Spinner.css";
 function Spinner() {
   return (
-    <div className="spinner dark:bg-gray-900">
+    <div className="spinner bg-gray-900 dark:bg-blue-600">
     </div>
   );
 }

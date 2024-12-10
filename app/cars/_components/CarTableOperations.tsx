@@ -3,14 +3,14 @@ import SortBy from "@/_components/ui/SortBy";
 
 function CarTableOperations() {
   return (
-    <div className="flex items-end gap-6 justify-end">
+    <div className="flex flex-col md:flex-row items-center gap-6 md:justify-end">
       <Filter
         field="type"
         options={[
           { value: "all", label: "All" },
           { value: "luxury", label: "Luxury" },
           { value: "medium-cars", label: "Medium" },
-          { value: "people-carrier", label: "Carrier" },
+          { value: "people-carrier", label: "People Carrier" },
         ]}
       />
 

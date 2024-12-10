@@ -2,6 +2,7 @@ import Image from "next/image";
 import BGShape from "@/public/assets/hero/hero-bg.png";
 import HeroCar from "@/public/assets/hero/main-car.png";
 import Container from "./ui/Container";
+import Link from "next/link";
 
 function Hero() {
   return (
@@ -25,6 +26,10 @@ function Hero() {
               <div className="mb-16 dark:text-slate-700 dark:sm:text-slate-300">
                 Rent the car of your dreams. Unbeatable prices, unlimited miles,
                 flexible pick-up options and much more.
+              </div>
+
+              <div className="bg-slate-400 dark:bg-slate-600 hover:bg-slate-500 dark:hover:bg-slate-500 p-10 pr-20 font-bold rounded-full cursor-pointer">
+                <Link href='/cars'>Start journey ...</Link>
               </div>
             </div>
 

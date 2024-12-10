@@ -2,15 +2,20 @@
 import { Car } from "@/types";
 import CarItem from "./CarItem";
 import { useSearchParams } from "next/navigation";
+import { useVoyager } from "@/app/voyagerContext";
 
-export default function CarList({ cars }: { cars: Car[] | null }) {
+export default function CarList({ cars }: { cars: Car[] | null | undefined }) {
   const searchParams = useSearchParams();
+  const { pickUp } = useVoyager();
+  let fliteredCarsByLocation = cars;
+  if (pickUp)
+    fliteredCarsByLocation = cars?.filter((car) => car.location === pickUp);
 
   // 1) FILTER
   const filterValue = searchParams.get("type") || "all";
   let filteredCars: Car[] | null | undefined;
 
-  if (filterValue === "all") filteredCars = cars;
+  if (filterValue === "all") filteredCars = fliteredCarsByLocation;
   if (filterValue === "luxury")
     filteredCars = cars?.filter((car) => car.car_type === "Luxury");
   if (filterValue === "medium-cars")
@@ -23,7 +28,7 @@ export default function CarList({ cars }: { cars: Car[] | null }) {
   const [field, direction] = sortBy.split("-");
   const modifier = direction === "asc" ? 1 : -1;
   const sortedCars =
-  filteredCars?.sort((a, b) => (a[field] - b[field]) * modifier) || [];
+    filteredCars?.sort((a, b) => (a[field] - b[field]) * modifier) || [];
 
   return (
     <>

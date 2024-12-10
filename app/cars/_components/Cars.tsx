@@ -30,11 +30,16 @@ export default async function Cars() {
           </Row>
         </div>
       ) : (
-        <Container>
-          <GridBox>
-            <CarList cars={cars} />
-          </GridBox>
-        </Container>
+        <>
+          <div className="pt-16">
+            <CarTableOperations />
+          </div>
+          <Container>
+            <GridBox>
+              <CarList cars={cars} />
+            </GridBox>
+          </Container>
+        </>
       )}
     </>
   );

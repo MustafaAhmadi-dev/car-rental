@@ -16,13 +16,13 @@ function SortBy({ options }: { options: Option[] }) {
   const path = usePathname();
   // console.log('path',path);
 
-  function handleSort(value: string) {
-    router.push(`${path}?sortBy=${value}`);
-  }
-
-  // function handleSort(e: React.ChangeEvent<HTMLSelectElement>) {
-  //   router.push(`${path}?sort=${e.target.value}`);
+  // function handleSort(value: string) {
+  //   router.push(`${path}?sortBy=${value}`);
   // }
+
+  function handleSort(e: React.ChangeEvent<HTMLSelectElement>) {
+    router.push(`${path}?sortBy=${e.target.value}`);
+  }
   // const sortBy = searchParams.get("sortBy") || "";
 
   // function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -32,8 +32,8 @@ function SortBy({ options }: { options: Option[] }) {
 
   return (
     <select
-      value={options[0].value}
-      onChange={()=> handleSort}
+      defaultValue={options[0].value}
+      onChange={(e)=> handleSort(e)}
       className="text-2xl py-3 px-5 border-2 border-solid dark:border-gray-600 dark:text-slate-300 bg-gray-100 dark:bg-gray-700 shadow-sm hover:cursor-pointer rounded-full"
     >
       {options.map((option) => (
