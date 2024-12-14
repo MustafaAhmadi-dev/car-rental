@@ -1,23 +1,22 @@
 "use server";
 
-import { cache } from "react";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { supabase } from "@/_lib/supabase";
 import { handleError } from "../utils";
 import { Customer } from "@/types";
 
-export const getCurrentUser = cache(async () => {
+export async function getCurrentUser() {
   const { data: session, error: autherror } = await supabase.auth.getSession();
   if (autherror) handleError(autherror, "no session");
   if (!session.session) return null;
-  console.log("session", session);
+
   const { data, error } = await supabase.auth.getUser();
 
   if (error) handleError(error, "Failed to get the current User!!!");
 
   return data.user;
-});
+}
 
 export async function logIn({
   email,
