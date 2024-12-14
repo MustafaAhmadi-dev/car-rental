@@ -1,3 +1,5 @@
+export const PAGE_SIZE = 10;
+
 export const mobileNavItems = [
   {
     name: "Vehicles",
@@ -33,6 +35,10 @@ export const desktopNavItems = [
 ];
 
 export const dashboardNavItems = [
+  {
+    name: "Dashboard",
+    url: "/dashboard",
+  },
   {
     name: "Vehicle Models",
     url: "/cars",

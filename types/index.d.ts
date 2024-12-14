@@ -121,6 +121,50 @@ declare type FilterProps = {
   field: string;
 };
 
+declare type MenusContextValues = {
+  openId: string;
+  close: () => void;
+  open: (id: string) => void;
+  position: { x: number; y: number } | null;
+  setPosition: (position: { x: number; y: number }) => void;
+};
+
+declare type CreateCarFormProps = {
+  onCloseModal?: () => void;
+  modal?: boolean;
+  carToEdit?: Partial<Car>;
+};
+
+declare type ConfirmDeleteProps = {
+  resourceName: string;
+  onConfirm?: () => void;
+  disabled?: boolean;
+  onCloseModal?: () => void;
+};
+
+declare type Booking = {
+  created_at?: string;
+  pickUpLocation: string;
+  dropOffLocation: string;
+  pickUpDate: string;
+  dropOffDate: string;
+  totalPrice: number;
+  carId: number;
+  customerId: number;
+};
+
+declare type BookingPlus = {
+  cars: { name: string };
+  customers: { fullName: string; email: string; country?: string };
+  id: number;
+} & Booking;
+
+declare type DataItemProps = {
+  Icon: IconType;
+  label: string;
+  children: ReactNode;
+};
+
 // declare type User = {
 //   email: string;
 //   id: string;

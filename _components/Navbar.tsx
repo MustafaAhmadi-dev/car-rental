@@ -10,6 +10,7 @@ import { useColorMode } from "@/app/colorModeContext";
 
 export default function Navbar({ user }: { user?: User | null }) {
   const isAuthenticated = user?.role === "authenticated";
+
   const [nav, setNav] = useState(false);
   const { toggleColorMode, isDarkMode } = useColorMode();
   const ref = useOutsideClick(() => setNav(false));

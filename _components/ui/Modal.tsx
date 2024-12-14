@@ -59,7 +59,7 @@ type WindowProps = {
   name: string;
   scroll?: boolean;
 };
-function Window({ children, name }: WindowProps) {
+function Window({ children, name, scroll = false }: WindowProps) {
   const { openName, close } = useContext(ModalContext);
   const ref = useOutsideClick(close);
 
@@ -71,7 +71,9 @@ function Window({ children, name }: WindowProps) {
       style={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
     >
       <div
-        className="fixed top-1/2 left-1/2 bg-gray-50 dark:bg-gray-800 rounded-lg py-12 px-0 sm:px-16 transition-all -translate-x-1/2 -translate-y-1/2 h-full sm:h-auto overflow-y-scroll sm:overflow-hidden"
+        className={`fixed top-1/2 left-1/2 bg-gray-50 dark:bg-gray-800 rounded-lg py-12 px-0 sm:px-16 transition-all -translate-x-1/2 -translate-y-1/2  ${
+          scroll ? "h-5/6 overflow-y-scroll" : ""
+        }`}
         ref={ref}
       >
         <button

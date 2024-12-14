@@ -12,20 +12,17 @@ export default async function Cars() {
   const cars = await getAllCars();
   const user = await getCurrentUser();
   const isAuthenticated = user?.role === "authenticated";
-  //   const isAuthenticated = true;
 
   return (
     <>
       {isAuthenticated ? (
         <div className="pt-12">
           <Row variant="horizontal">
-            <h1>All vehicles</h1>
             <CarTableOperations />
           </Row>
 
           <Row>
-            {/* <CarTable cars={cars} /> */}
-            <CarTable />
+            <CarTable cars={cars} />
             <AddCar />
           </Row>
         </div>

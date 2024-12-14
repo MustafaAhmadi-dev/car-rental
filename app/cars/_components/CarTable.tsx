@@ -1,9 +1,58 @@
-function CarTable() {
-    return (
-        <div>
-            
-        </div>
-    )
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { useVoyager } from "@/app/voyagerContext";
+import { Car } from "@/types";
+import CarRow from "./CarRow";
+import Menus from "@/_components/ui/Menus";
+import { Table, TableBody, TableHeader } from "@/_components/ui/Table";
+
+function CarTable({ cars }: { cars: Car[] | null | undefined }) {
+  const searchParams = useSearchParams();
+  const { pickUp } = useVoyager();
+  let fliteredCarsByLocation = cars;
+  if (pickUp)
+    fliteredCarsByLocation = cars?.filter((car) => car.location === pickUp);
+
+  // 1) FILTER
+  const filterValue = searchParams.get("type") || "all";
+  let filteredCars: Car[] | null | undefined;
+
+  if (filterValue === "all") filteredCars = fliteredCarsByLocation;
+  if (filterValue === "luxury")
+    filteredCars = cars?.filter((car) => car.car_type === "Luxury");
+  if (filterValue === "medium-cars")
+    filteredCars = cars?.filter((car) => car.car_type === "Medium Cars");
+  if (filterValue === "people-carrier")
+    filteredCars = cars?.filter((car) => car.car_type === "People Carrier");
+
+  // 2) SORT
+  const sortBy = searchParams.get("sortBy") || "startDate-asc";
+  const [field, direction] = sortBy.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortedCars =
+    filteredCars?.sort((a, b) => (a[field] - b[field]) * modifier) || [];
+
+  return (
+    <Menus>
+      <Table columns="0.6fr 1.7fr 1.7fr 1.6fr 1fr 1fr">
+        <TableHeader>
+          <div></div>
+          <div>Car</div>
+          <div>Seats</div>
+          <div>Type of Car</div>
+          <div>Price</div>
+          <div></div>
+        </TableHeader>
+
+        <TableBody data={sortedCars}>
+          {sortedCars.map((car) => (
+            <CarRow car={car} key={car.id} />
+          ))}
+        </TableBody>
+      </Table>
+    </Menus>
+  );
 }
 
-export default CarTable
+export default CarTable;

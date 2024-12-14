@@ -23,7 +23,7 @@ export default function LoginForm() {
         try {
           const { message, data } = await logIn({ email, password });
           if (message) setError(message);
-          if (data) router.push("/");
+          if (data) router.push("/dashboard");
         } finally {
           setIsLoggingIn(false);
         }
