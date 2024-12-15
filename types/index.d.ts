@@ -86,17 +86,6 @@ declare type Customer = {
   country: string;
 };
 
-declare type Booking = {
-  created_at?: string;
-  pickUpLocation: string;
-  dropOffLocation: string;
-  pickUpDate: string;
-  dropOffDate: string;
-  totalPrice: number;
-  carId: number;
-  customerId: number;
-};
-
 declare type CarInfoBoxProps = {
   header?: string;
   title: string;

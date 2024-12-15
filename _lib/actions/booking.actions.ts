@@ -2,39 +2,26 @@
 
 import { Booking } from "@/types";
 import { supabase } from "../supabase";
-import { PAGE_SIZE } from "@/constants";
+// import { PAGE_SIZE } from "@/constants";
 import { handleError } from "../utils";
 
-export async function getAllBookings({
-  sortBy,
-  page,
-}: {
-  sortBy?: {
-    field: string;
-    direction: string;
-  };
-  page?: number;
-}) {
-  let query = supabase
+export async function getAllBookings() {
+  const { data, error, count } = await supabase
     .from("bookings")
     .select("*,cars(name),customers(fullName, email)", { count: "exact" });
 
-  if (sortBy)
-    query = query.order(sortBy.field, {
-      ascending: sortBy.direction === "asc",
-    });
+  // if (sortBy)
+  //   query = query.order(sortBy.field, {
+  //     ascending: sortBy.direction === "asc",
+  //   });
 
-  if (page) {
-    const from = (page - 1) * PAGE_SIZE;
-    const to = from + PAGE_SIZE - 1;
-    query = query.range(from, to);
-  }
-
-  const { data, error, count } = await query;
+  // if (page) {
+  //   const from = (page - 1) * PAGE_SIZE;
+  //   const to = from + PAGE_SIZE - 1;
+  //   query = query.range(from, to);
+  // }
 
   if (error) {
-    // console.error(error);
-    // throw new Error("Bookings could not be fetched");
     handleError(error, "Bookings could not be fetched");
   }
 
@@ -59,8 +46,6 @@ export async function deleteBooking(id: number) {
   const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 
   if (error) {
-    // console.error(error);
-    // throw new Error("Booking could not be deleted");
     handleError(error, "Booking could not be deleted");
   }
 

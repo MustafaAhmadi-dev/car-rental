@@ -1,6 +1,8 @@
-import Menus from "@/_components/ui/Menus";
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import Pagination from "@/_components/ui/Pagination";
-import { getAllBookings } from "@/_lib/actions/booking.actions";
+import Menus from "@/_components/ui/Menus";
 import { BookingPlus } from "@/types";
 import BookingRow from "./BookingRow";
 import {
@@ -10,8 +12,20 @@ import {
   TableHeader,
 } from "@/_components/ui/Table";
 
-export default async function BookingTable() {
-  const { data: bookings, count } = await getAllBookings({});
+export default function BookingTable({
+  bookings,
+  count,
+}: {
+  bookings: BookingPlus[];
+  count: number;
+}) {
+  const searchParams = useSearchParams();
+
+  const sortBy = searchParams.get("sortBy") || "pickUpDate-desc";
+  const [field, direction] = sortBy.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortedBookings =
+    bookings?.sort((a, b) => (a[field] - b[field]) * modifier) || [];
 
   if (!bookings?.length) return <p>No bookings could be found.</p>;
 
@@ -30,8 +44,8 @@ export default async function BookingTable() {
           <div></div>
         </TableHeader>
 
-        <TableBody data={bookings as BookingPlus[]}>
-          {bookings.map((booking: BookingPlus) => (
+        <TableBody data={sortedBookings as BookingPlus[]}>
+          {sortedBookings.map((booking: BookingPlus) => (
             <BookingRow key={booking.id} booking={booking} />
           ))}
         </TableBody>

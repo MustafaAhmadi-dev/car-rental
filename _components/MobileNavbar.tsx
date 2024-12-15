@@ -27,7 +27,7 @@ export default function MobileNavbar({
         {isAuthenticated ? (
           <li>
             <Link
-              href="/bookings"
+              href="/dashboard"
               onClick={openNav}
               className="no-underline text-gray-600 font-semibold transition-all hover:text-gray-800"
             >
