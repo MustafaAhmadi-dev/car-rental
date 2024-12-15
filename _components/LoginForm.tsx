@@ -8,6 +8,7 @@ import SpinnerMini from "@/_components/ui/SpinnerMini";
 import { logIn } from "@/_lib/actions/user.actions";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useVoyager } from "@/app/voyagerContext";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("directeur@voyager.com");
@@ -15,6 +16,7 @@ export default function LoginForm() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { logInUser } = useVoyager();
 
   return (
     <Form
@@ -23,7 +25,10 @@ export default function LoginForm() {
         try {
           const { message, data } = await logIn({ email, password });
           if (message) setError(message);
-          if (data) router.push("/dashboard");
+          if (data) {
+            logInUser(data.user);
+            router.push("/dashboard");
+          }
         } finally {
           setIsLoggingIn(false);
         }

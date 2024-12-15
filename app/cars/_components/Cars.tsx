@@ -1,5 +1,4 @@
-import { getAllCars } from "@/_lib/actions/cars.actions";
-import { getCurrentUser } from "@/_lib/actions/user.actions";
+"use client";
 import CarTableOperations from "./CarTableOperations";
 import CarTable from "./CarTable";
 import AddCar from "./AddCar";
@@ -7,10 +6,11 @@ import GridBox from "@/_components/ui/GridBox";
 import Row from "@/_components/ui/Row";
 import CarList from "./CarList";
 import Container from "@/_components/ui/Container";
+import { Car } from "@/types";
+import { useVoyager } from "@/app/voyagerContext";
 
-export default async function Cars() {
-  const cars = await getAllCars();
-  const user = await getCurrentUser();
+export default function Cars({ cars }: { cars: Car[] }) {
+  const { user } = useVoyager();
   const isAuthenticated = user?.role === "authenticated";
 
   return (

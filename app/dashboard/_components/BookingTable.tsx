@@ -11,6 +11,8 @@ import {
   TableFooter,
   TableHeader,
 } from "@/_components/ui/Table";
+import { useVoyager } from "@/app/voyagerContext";
+import Link from "next/link";
 
 export default function BookingTable({
   bookings,
@@ -20,6 +22,8 @@ export default function BookingTable({
   count: number;
 }) {
   const searchParams = useSearchParams();
+  const { user } = useVoyager();
+  const isAuthenticated = user?.role === "authenticated";
 
   const sortBy = searchParams.get("sortBy") || "pickUpDate-desc";
   const [field, direction] = sortBy.split("-");
@@ -28,6 +32,16 @@ export default function BookingTable({
     bookings?.sort((a, b) => (a[field] - b[field]) * modifier) || [];
 
   if (!bookings?.length) return <p>No bookings could be found.</p>;
+  if (!isAuthenticated)
+    return (
+      <Link href="/sign-in">
+        <p>
+          You don&apos;t have permission to view this section. Please{" "}
+          <span className="text-orange"> Log in </span>
+          first.
+        </p>
+      </Link>
+    );
 
   return (
     <Menus>

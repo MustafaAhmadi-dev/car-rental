@@ -2,18 +2,19 @@
 
 import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
-import { User } from "@supabase/supabase-js";
 import { useOutsideClick } from "@/_lib/hooks/useoOutsideClick";
 import DesktopNavbar from "./DesktopNavbar";
 import MobileNavbar from "./MobileNavbar";
 import { useColorMode } from "@/app/colorModeContext";
+import { useVoyager } from "@/app/voyagerContext";
 
-export default function Navbar({ user }: { user?: User | null }) {
-  const isAuthenticated = user?.role === "authenticated";
-
+export default function Navbar() {
   const [nav, setNav] = useState(false);
   const { toggleColorMode, isDarkMode } = useColorMode();
   const ref = useOutsideClick(() => setNav(false));
+
+  const { user } = useVoyager();
+  const isAuthenticated = user?.role === "authenticated";
 
   function openNav() {
     setNav(!nav);

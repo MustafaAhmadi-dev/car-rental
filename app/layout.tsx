@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/_components/Navbar";
-import { getCurrentUser } from "@/_lib/actions/user.actions";
 import { VoyagerProvider } from "./voyagerContext";
 import "react-datepicker/dist/react-datepicker.css";
 import { ColorModeProvider } from "./colorModeContext";
@@ -32,8 +31,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getCurrentUser();
-
   return (
     <html lang="en">
       <body
@@ -42,7 +39,7 @@ export default async function RootLayout({
         <ColorModeProvider>
           <VoyagerProvider>
             <section className="flex flex-col bg-gray-100 dark:bg-gray-900 dark:text-slate-100 min-h-dvh">
-              <Navbar user={user} />
+              <Navbar />
               {children}
             </section>
           </VoyagerProvider>

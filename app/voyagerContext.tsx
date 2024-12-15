@@ -2,6 +2,7 @@
 
 import { createContext, ReactNode, useContext, useReducer } from "react";
 import { Car, InitialState } from "@/types";
+import { User } from "@supabase/supabase-js";
 
 const initialState: InitialState = {
   car: {
@@ -31,6 +32,7 @@ const initialState: InitialState = {
   passportNumber: "",
   age: "",
   email: "",
+  user: null,
 };
 
 type VoyagerContextValue = InitialState & {
@@ -38,6 +40,8 @@ type VoyagerContextValue = InitialState & {
   submitOrder: (data: { [x: string]: string }) => void;
   chooseCar: (data: Car) => void;
   resetOrder: () => void;
+  logInUser: (data: User) => void;
+  logOut: () => void;
 };
 const VoyagerContext = createContext({} as VoyagerContextValue);
 
@@ -56,7 +60,20 @@ type chooseCar = {
 type resetOrder = {
   type: "RESET-ORDER";
 };
-type Action = submitRequest | submitOrder | chooseCar | resetOrder;
+type logInUser = {
+  type: "LOG-IN";
+  payload: User;
+};
+type logOut = {
+  type: "LOG-OUT";
+};
+type Action =
+  | submitRequest
+  | submitOrder
+  | chooseCar
+  | resetOrder
+  | logInUser
+  | logOut;
 
 function reducer(state: InitialState, action: Action): InitialState {
   if (action.type === "SUBMIT-REQUEST") {
@@ -94,6 +111,14 @@ function reducer(state: InitialState, action: Action): InitialState {
     };
   }
 
+  if (action.type === "LOG-IN") {
+    return { ...state, user: action.payload };
+  }
+
+  if (action.type === "LOG-OUT") {
+    return { ...state, user: null };
+  }
+
   return state;
 }
 
@@ -114,6 +139,7 @@ export function VoyagerProvider({ children }: { children: ReactNode }) {
     passportNumber: voyagerState.passportNumber,
     age: voyagerState.age,
     email: voyagerState.email,
+    user: voyagerState.user,
     submitRequest(data) {
       dispatch({ type: "SUBMIT-REQUEST", payload: data });
     },
@@ -125,6 +151,12 @@ export function VoyagerProvider({ children }: { children: ReactNode }) {
     },
     resetOrder() {
       dispatch({ type: "RESET-ORDER" });
+    },
+    logInUser(data) {
+      dispatch({ type: "LOG-IN", payload: data });
+    },
+    logOut() {
+      dispatch({ type: "LOG-OUT" });
     },
   };
 

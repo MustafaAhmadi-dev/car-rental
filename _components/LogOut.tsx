@@ -5,14 +5,17 @@ import { logOut } from "@/_lib/actions/user.actions";
 import { useState } from "react";
 import { handleError } from "@/_lib/utils";
 import SpinnerMini from "./ui/SpinnerMini";
+import { useVoyager } from "@/app/voyagerContext";
 
 export default function Logout() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const { logOut: logOutUser } = useVoyager();
 
-  function handleLogOut() {
+  async function handleLogOut() {
     setIsLoggingOut(true);
     try {
-      logOut();
+      logOutUser();
+      await logOut();
     } catch (error) {
       handleError(error, "Failed to log out user!!!");
     } finally {

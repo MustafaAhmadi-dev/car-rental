@@ -53,6 +53,7 @@ declare type InitialState = {
   passportNumber: string;
   age: string;
   email: string;
+  user:User | null;
 };
 
 declare type LocationData = {
